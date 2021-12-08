@@ -1,0 +1,10 @@
+@import "src/colors";
+
+.TaskListItem {
+  background-color: $header-grey;
+  border-radius: 16px;
+  padding: 16px 24px;
+  height: 20%;
+  width: 100%;
+  color: white;
+}
