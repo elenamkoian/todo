@@ -62,7 +62,7 @@ export class PageContent extends Component {
     return (
       <div className="PageContent">
         <TaskList taskList={this.state.taskList} />
-        <TaskDetails taskList={this.state.taskList} />
+        <TaskDetails taskList={this.state.taskList} selectedTask={this.state.selectedTask} />
       </div>
     );
   }
