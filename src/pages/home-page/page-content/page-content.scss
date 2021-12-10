@@ -1,8 +1,9 @@
-@import "src/colors";
+@import "../../../colors";
 
 .PageContent {
+  gap: 12px;
   display: flex;
-  background-color: green;
+  //background-color: green;
   margin-top: 24px;
   height: 600px;
 }

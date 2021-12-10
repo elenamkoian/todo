@@ -1,0 +1,42 @@
+@import "../../colors";
+
+.TaskInfo {
+  display: flex;
+  font-size: 24px;
+  color: white;
+  padding-left: 10px;
+}
+
+.Avatar {
+  width: 60px;
+  height: 60px;
+  padding: 20px;
+}
+
+.ItemInfoDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.ItemTitle {
+  height: 20px;
+  width: 260px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: $white;
+  font-weight: bold;
+  font-size: 20px;
+
+  &:focus {
+    border: 1px solid $border-grey;
+    background-color: transparent;
+  }
+}
+
+.ItemDescription {
+  font-size: 14px;
+  font-family: sans-serif;
+  color: grey;
+  margin: 0;
+}
