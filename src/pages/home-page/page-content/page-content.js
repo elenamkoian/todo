@@ -12,7 +12,7 @@ export class PageContent extends Component {
         avatar: 'https://s3-alpha-sig.figma.com/img/4a28/0872/9dc399cae1699b498c1bfaf3748d9f5c?Expires=1639958400&Signature=GYQRttAUJYubUIRPBy5~Q1hkbHo38vwLKh0Y7fa0PHXNduUXQNTP7R~BavzzJaptwkMGqQekf8GwvxCo3WJF2oqA9m5ysozeHivWtoazwaVaw1e6Rkyx4FKDYZIDWL3raVYkafVZpJFwO5Id7rhwrVG0oz5ZHB06GezyfjbeaNdkxN3s7Jn8lf3kA-B1eFvHqTtE-Va7tZAg10at5NcVCwaNOP7zGiLj1xsyGSTdkwPttAyWl~cA6dv-prmoHrn4~5982b8OA1pbAN1ty99Eug77nyJA5ZSmmcBafiSve6RPVbjaDDFuhhbG5qv8T0ZXAE9eXPnytT8L8DCwE8f~DQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
         todos: [
           {
-            name: 'wash the dishes',
+            name: 'go to school',
             isDone: false,
           },
           {
@@ -35,7 +35,7 @@ export class PageContent extends Component {
             isDone: false,
           },
           {
-            name: 'go for shopping',
+            name: 'clean the house',
             isDone: false,
           },
         ],
@@ -45,7 +45,11 @@ export class PageContent extends Component {
         avatar: 'https://s3-alpha-sig.figma.com/img/4a28/0872/9dc399cae1699b498c1bfaf3748d9f5c?Expires=1639958400&Signature=GYQRttAUJYubUIRPBy5~Q1hkbHo38vwLKh0Y7fa0PHXNduUXQNTP7R~BavzzJaptwkMGqQekf8GwvxCo3WJF2oqA9m5ysozeHivWtoazwaVaw1e6Rkyx4FKDYZIDWL3raVYkafVZpJFwO5Id7rhwrVG0oz5ZHB06GezyfjbeaNdkxN3s7Jn8lf3kA-B1eFvHqTtE-Va7tZAg10at5NcVCwaNOP7zGiLj1xsyGSTdkwPttAyWl~cA6dv-prmoHrn4~5982b8OA1pbAN1ty99Eug77nyJA5ZSmmcBafiSve6RPVbjaDDFuhhbG5qv8T0ZXAE9eXPnytT8L8DCwE8f~DQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
         todos: [
           {
-            name: 'wash the dishes',
+            name: 'go to work',
+            isDone: false,
+          },
+          {
+            name: 'do ironing',
             isDone: false,
           },
           {
@@ -56,14 +60,22 @@ export class PageContent extends Component {
       },
     ],
     selectedTask: 0,
-  }
+  };
 
   render() {
     return (
       <div className="PageContent">
-        <TaskList taskList={this.state.taskList} />
+        <TaskList taskList={this.state.taskList}
+                  activeTaskId={this.state.selectedTask}
+                  onSelectedTaskClick={(index) => this.handleSelectedTask(index)} />
         <TaskDetails taskList={this.state.taskList} selectedTask={this.state.selectedTask} />
       </div>
     );
   }
+
+  handleSelectedTask = (index) => {
+    this.setState({
+      selectedTask: index,
+    });
+  };
 }
