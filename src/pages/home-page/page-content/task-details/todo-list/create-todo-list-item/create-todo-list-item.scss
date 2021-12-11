@@ -1,0 +1,32 @@
+.CreateTodoListItem {
+  display: flex;
+  gap: 8px;
+  color: white;
+
+  & > span {
+    height: 20px;
+    font-size: 16px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
+
+  .AddIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.AddTodoInput {
+  color: white;
+  height: 24px;
+  outline: none;
+  padding-left: 8px;
+  font-size: 16px;
+  border: 1px solid grey;
+  background-color: transparent;
+}
