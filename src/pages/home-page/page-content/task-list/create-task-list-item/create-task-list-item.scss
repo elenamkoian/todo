@@ -1,0 +1,44 @@
+.CreateTaskListItem {
+  display: flex;
+  min-width: 420px;
+  border-radius: 16px;
+  border: 1px solid #383B41;
+}
+
+.CreateTaskListItemAvatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  cursor: pointer;
+  margin: 20px;
+}
+
+.AddInfoDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.CreateTaskListItemTitle {
+  font-size: 20px;
+  font-weight: bold;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: #f4f6fa;
+}
+
+.CreateTaskListItemDescription {
+  font-size: 14px;
+  font-family: sans-serif;
+  color: grey;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  //margin: 0;
+}

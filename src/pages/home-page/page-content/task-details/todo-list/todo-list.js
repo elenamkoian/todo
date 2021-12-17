@@ -1,7 +1,7 @@
 import { TodoListItem } from './todo-list-item/todo-list-item';
 import './todo-list.scss';
 
-export const TodoList = ({ task }) => {
+export const TodoList = ({ task, onNewTodo }) => {
   return (
     <div className="TodoList">
       {
@@ -10,6 +10,7 @@ export const TodoList = ({ task }) => {
             name={todo.name}
             isDone={todo.isDone}
             key={index}
+            onNewTodo={onNewTodo}
           />
         ))
       }

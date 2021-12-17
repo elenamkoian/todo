@@ -3,6 +3,8 @@ import { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
+// import { TodoListItem } from '../todo-list-item/todo-list-item';
+
 export class CreateTodoListItem extends Component {
   state = {
     isEditMode: false,
@@ -10,6 +12,7 @@ export class CreateTodoListItem extends Component {
 
   render() {
     const isEditMode = this.state.isEditMode;
+
     return (
       <div>
         {
@@ -24,8 +27,10 @@ export class CreateTodoListItem extends Component {
             <input
               type="text"
               className="AddTodoInput"
-              onBlur={this.handleSaveTodo}
-              autoFocus />
+              onBlur={this.handleBlur}
+              onKeyDown={this.handleKeyDown}
+              autoFocus
+            />
           )
         }
       </div>
@@ -38,9 +43,20 @@ export class CreateTodoListItem extends Component {
     });
   };
 
-  handleSaveTodo = () => {
+  handleBlur = (ev) => {
     this.setState({
       isEditMode: !this.state.isEditMode,
     });
+
+    if(!ev.target.value) {
+      return;
+    }
+    this.props.onNewTodo(ev.target.value);
   };
+
+  handleKeyDown = (ev) => {
+    if(ev.code === 'Enter') {
+      this.handleBlur(ev);
+    }
+  }
 }

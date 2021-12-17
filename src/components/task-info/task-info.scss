@@ -16,10 +16,11 @@
 .ItemInfoDiv {
   display: flex;
   flex-direction: column;
+  height: 36px;
 }
 
 .ItemTitle {
-  height: 20px;
+  height: 10px;
   width: 260px;
   background-color: transparent;
   outline: none;
