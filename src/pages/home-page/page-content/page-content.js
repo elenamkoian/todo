@@ -20,7 +20,10 @@ export class PageContent extends Component {
           onSelectedTaskClick={(index) => this.handleSelectedTask(index)}
         />
 
-        {selectedTaskInfo && <TaskDetails task={selectedTaskInfo} onNewTodo={this.handleNewTodo} />}
+        {selectedTaskInfo && <TaskDetails task={selectedTaskInfo}
+                                          onNewTodo={this.handleNewTodo}
+                                          onDeleteTodo={(index) => this.handleXIcon(index)}
+        />}
       </div>
     );
   }
@@ -41,5 +44,15 @@ export class PageContent extends Component {
     this.setState({
       taskList,
     });
+  };
+
+  handleXIcon(index) {
+    const taskList = [...this.state.taskList];
+    const selectedTask = taskList[this.state.selectedTaskIndex];
+    selectedTask.todos.splice(index, 1);
+    this.setState({
+      taskList,
+    });
+    localStorage.setItem('taskList', JSON.stringify(taskList));
   };
 }

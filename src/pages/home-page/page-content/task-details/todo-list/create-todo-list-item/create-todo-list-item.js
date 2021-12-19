@@ -3,8 +3,6 @@ import { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-// import { TodoListItem } from '../todo-list-item/todo-list-item';
-
 export class CreateTodoListItem extends Component {
   state = {
     isEditMode: false,
@@ -37,26 +35,36 @@ export class CreateTodoListItem extends Component {
     );
   }
 
-  handleEditModeChange = () => {
+  toggle = () => {
     this.setState({
       isEditMode: !this.state.isEditMode,
     });
+  };
+
+  save = (value) => {
+    this.props.onNewTodo(value);
+    this.toggle();
+  };
+
+  cancel = () => {
+    this.toggle();
+  }
+
+  handleEditModeChange = () => {
+    this.toggle();
   };
 
   handleBlur = (ev) => {
-    this.setState({
-      isEditMode: !this.state.isEditMode,
-    });
-
-    if(!ev.target.value) {
-      return;
-    }
-    this.props.onNewTodo(ev.target.value);
+    ev.target.value ? this.save(ev.target.value) : this.cancel();
   };
 
   handleKeyDown = (ev) => {
-    if(ev.code === 'Enter') {
+    if (ev.code === 'Enter') {
       this.handleBlur(ev);
     }
-  }
+    if (ev.code === 'Escape' ) {
+      this.cancel();
+    }
+  };
+
 }
