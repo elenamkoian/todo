@@ -2,7 +2,7 @@ import './task-list.scss';
 import { TaskListItem } from './task-list-item/task-list-item';
 import { CreateTaskListItem } from './create-task-list-item/create-task-list-item';
 
-export const TaskList = ({ taskList, onSelectedTaskClick, activeTaskId }) => {
+export const TaskList = ({ taskList, onSelectedTaskClick, activeTaskId, onCreateTaskFormVisibilityChange }) => {
   return (
     <div className="TaskList">
       {
@@ -15,7 +15,7 @@ export const TaskList = ({ taskList, onSelectedTaskClick, activeTaskId }) => {
           />
         ))
       }
-      <CreateTaskListItem />
+      <CreateTaskListItem onCreateTaskFormVisibilityChange={onCreateTaskFormVisibilityChange} />
     </div>
   );
 };

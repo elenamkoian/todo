@@ -2,15 +2,18 @@ import './page-content.scss';
 import { TaskList } from './task-list/task-list';
 import { TaskDetails } from './task-details/task-details';
 import { Component } from 'react';
+import { CreateTaskForm } from './create-task-form/create-task-form';
 
 export class PageContent extends Component {
   state = {
     taskList: JSON.parse(localStorage.getItem('taskList')) ?? [],
     selectedTaskIndex: 0,
+    isCreateTaskFormVisible: false,
   };
 
   render() {
     const selectedTaskInfo = this.state.taskList[this.state.selectedTaskIndex];
+    const isCreateTaskFormVisible = this.state.isCreateTaskFormVisible;
 
     return (
       <div className="PageContent">
@@ -18,14 +21,29 @@ export class PageContent extends Component {
           taskList={this.state.taskList}
           activeTaskId={this.state.selectedTaskIndex}
           onSelectedTaskClick={(index) => this.handleSelectedTask(index)}
+          onCreateTaskFormVisibilityChange={this.handleCreateTaskFormVisibilityChange}
         />
 
-        {selectedTaskInfo && <TaskDetails task={selectedTaskInfo}
-                                          onNewTodo={this.handleNewTodo}
-                                          onDeleteTodo={(index) => this.handleXIcon(index)}
-        />}
+        {selectedTaskInfo && (
+          <TaskDetails
+            task={selectedTaskInfo}
+            onNewTodo={this.handleNewTodo}
+            onDeleteTodo={(index) => this.handleXIcon(index)}
+          />
+        )}
+
+        {
+          isCreateTaskFormVisible && <CreateTaskForm />
+        }
+
       </div>
     );
+  }
+
+  handleCreateTaskFormVisibilityChange = () => {
+    this.setState({
+      isCreateTaskFormVisible: !this.state.isCreateTaskFormVisible,
+    })
   }
 
   handleSelectedTask = (index) => {
@@ -55,4 +73,6 @@ export class PageContent extends Component {
     });
     localStorage.setItem('taskList', JSON.stringify(taskList));
   };
+
+
 }

@@ -1,0 +1,65 @@
+.CreateTaskForm {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 900px;
+  gap: 8px;
+  padding: 20px;
+  //background-color: blue;
+}
+
+.CreateTaskFormAvatar {
+  border-radius: 50px;
+  width: 60px;
+  height: 60px;
+}
+
+.CreateTaskFormInfo {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.CreateTaskFormTitle {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  height: 30px;
+  width: 600px;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+  color: white;
+
+  &::placeholder {
+    color: white;
+  }
+}
+
+.CreateTaskFormDescription {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: grey;
+  font-style: italic;
+}
+
+.DividerDiv {
+  display: flex;
+  gap: 16px;
+  height: 90px;
+  width: 900px;
+  border-bottom: 1px solid #383B41;
+}
+
+.CreateTaskFormSaveOrCancel {
+  gap: 20px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.CreateTaskFormAddTodo {
+  padding: 16px;
+}
+
