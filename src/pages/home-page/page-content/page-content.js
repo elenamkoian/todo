@@ -1,110 +1,105 @@
 import './page-content.scss';
 import { TaskList } from './task-list/task-list';
 import { TaskDetails } from './task-details/task-details';
-import { Component } from 'react';
 import { CreateTaskForm } from './create-task-form/create-task-form';
+import { useState } from 'react';
 
-export class PageContent extends Component {
-  state = {
-    taskList: JSON.parse(localStorage.getItem('taskList')) ?? [],
-    selectedTaskIndex: 0,
-    isCreateTaskFormVisible: false,
-  };
+export const PageContent = () => {
+  const [taskList, setTaskList] = useState(JSON.parse(localStorage.getItem('taskList')) ?? []);
+  const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
+  const [isCreateTaskFormVisible, setIsCreateTaskFormVisible] = useState(false);
 
-  render() {
-    const selectedTaskInfo = this.state.taskList[this.state.selectedTaskIndex];
-    const isCreateTaskFormVisible = this.state.isCreateTaskFormVisible;
+  const selectedTaskInfo = taskList[selectedTaskIndex];
 
-    return (
-      <div className="PageContent">
-        <TaskList
-          taskList={this.state.taskList}
-          activeTaskId={this.state.selectedTaskIndex}
-          onSelectedTaskClick={(index) => this.handleSelectedTask(index)}
-          onCreateTaskFormVisibilityChange={this.handleCreateTaskFormVisibilityChange}
-          onDeleteTask={(index) => this.handleDeleteTask(index)}
-        />
-
-        {
-          selectedTaskInfo && (
-            <TaskDetails
-              task={selectedTaskInfo}
-              onNewTodo={this.handleNewTodo}
-              onDeleteTodo={(index) => this.handleTodoDelete(index)}
-            />
-          )
-        }
-
-        {
-          isCreateTaskFormVisible && (
-            <CreateTaskForm
-              onNewTaskSave={this.handleNewTaskSave}
-              onNewTodo={this.handleNewTodo}
-              onCancelNewTask={this.handleCancelNewTask}
-            />
-          )
-        }
-
-      </div>
-    );
-  }
-
-  handleCreateTaskFormVisibilityChange = () => {
-    if (!this.state.isCreateTaskFormVisible) {
-      this.setState({
-        selectedTaskIndex: null,
-      });
+  const handleCreateTaskFormVisibilityChange = () => {
+    if (!isCreateTaskFormVisible) {
+      setSelectedTaskIndex(null);
     }
-    this.setState({
-      isCreateTaskFormVisible: !this.state.isCreateTaskFormVisible,
-    });
+    setIsCreateTaskFormVisible(!isCreateTaskFormVisible);
   };
 
-  handleNewTaskSave = (newTask) => {
-    const taskList = [...this.state.taskList, newTask];
-    this.setState({ taskList });
-    localStorage.setItem('taskList', JSON.stringify((taskList)));
+  const handleNewTaskSave = (newTask) => {
+    const newTaskList = [...taskList, newTask];
+    // this.setState({ taskList });
+    setTaskList(newTaskList);
+    localStorage.setItem('taskList', JSON.stringify((newTaskList)));
   };
 
-  handleCancelNewTask = () => {
-    this.setState({ isCreateTaskFormVisible: false });
+  const handleCancelNewTask = () => {
+    // this.setState({ isCreateTaskFormVisible: false });
+    setIsCreateTaskFormVisible(false);
   };
 
-  handleSelectedTask = (index) => {
-    this.setState({
-      selectedTaskIndex: index,
-      isCreateTaskFormVisible: false,
-    });
+  const handleSelectedTask = (index) => {
+    // this.setState({
+    //   selectedTaskIndex: index,
+    //   isCreateTaskFormVisible: false,
+    // });
+    setSelectedTaskIndex(index);
+    setIsCreateTaskFormVisible(false);
   };
 
-  handleTodoDelete(index) {
-    const taskList = [...this.state.taskList];
-    const selectedTask = taskList[this.state.selectedTaskIndex];
+  const handleTodoDelete = (index) => {
+    const newTaskList = [...taskList];
+    const selectedTask = newTaskList[selectedTaskIndex];
     selectedTask.todos.splice(index, 1);
-    this.setState({
-      taskList,
-    });
-    localStorage.setItem('taskList', JSON.stringify(taskList));
+    // this.setState({
+    //   taskList,
+    // });
+    setTaskList(newTaskList);
+    localStorage.setItem('taskList', JSON.stringify(newTaskList));
   };
 
-  handleNewTodo = (newTodoName) => {
+  const handleNewTodo = (newTodoName) => {
     const newTodo = { name: newTodoName, isDone: false };
-    const taskList = [...this.state.taskList];
-    const selectedTask = taskList[this.state.selectedTaskIndex];
+    // const taskList = [...this.state.taskList]; // ??
+    const newTaskList = [...taskList];
+    const selectedTask = newTaskList[selectedTaskIndex];
 
     selectedTask.todos = [...selectedTask.todos, newTodo];
-    localStorage.setItem('taskList', JSON.stringify(taskList));
-    this.setState({
-      taskList,
-    });
+    localStorage.setItem('taskList', JSON.stringify(newTaskList));
+    // this.setState({ taskList });
+    setTaskList(newTaskList);
   };
 
-  handleDeleteTask(index) {
-    const taskList = [...this.state.taskList];
-    taskList.splice(index, 1);
-    this.setState({
-      taskList,
-    });
-    localStorage.setItem('taskList', JSON.stringify(taskList));
+  const handleDeleteTask = (index) => {
+    const newTaskList = [...taskList]; // ??
+    newTaskList.splice(index, 1);
+    // this.setState({ taskList });
+    setTaskList(newTaskList)
+    localStorage.setItem('taskList', JSON.stringify(newTaskList));
   };
-}
+
+  return (
+    <div className="PageContent">
+      <TaskList
+        taskList={taskList}
+        activeTaskId={selectedTaskIndex}
+        onSelectedTaskClick={(index) => handleSelectedTask(index)}
+        onCreateTaskFormVisibilityChange={handleCreateTaskFormVisibilityChange}
+        onDeleteTask={(index) => handleDeleteTask(index)}
+      />
+
+      {
+        selectedTaskInfo && (
+          <TaskDetails
+            task={selectedTaskInfo}
+            onNewTodo={handleNewTodo}
+            onDeleteTodo={(index) => handleTodoDelete(index)}
+          />
+        )
+      }
+
+      {
+        isCreateTaskFormVisible && (
+          <CreateTaskForm
+            onNewTaskSave={handleNewTaskSave}
+            onNewTodo={handleNewTodo}
+            onCancelNewTask={handleCancelNewTask}
+          />
+        )
+      }
+
+    </div>
+  );
+};
