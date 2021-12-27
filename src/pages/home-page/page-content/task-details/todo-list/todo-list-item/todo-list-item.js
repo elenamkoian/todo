@@ -3,7 +3,7 @@ import { Checkbox } from '../../../../../../components/checkbox';
 import { Close } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 
-export const TodoListItem = ({ name, isDone, onDeleteTodo }) => {
+export const TodoListItem = ({ name, onDeleteTodo }) => {
   return (
     <div className="TodoListItem">
       <Checkbox label={name} />

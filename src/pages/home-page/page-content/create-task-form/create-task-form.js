@@ -3,6 +3,7 @@ import './create-task-form.scss';
 import { Component } from 'react';
 import { Divider } from '../../../../components/divider/divider';
 import { CreateTodoListItem } from '../task-details/todo-list/create-todo-list-item/create-todo-list-item';
+import { TodoList } from '../task-details/todo-list/todo-list';
 
 export class CreateTaskForm extends Component {
   state = {
@@ -43,7 +44,8 @@ export class CreateTaskForm extends Component {
         <Divider />
 
         <div className="CreateTaskFormAddTodo">
-          <CreateTodoListItem onNewTodo={this.handleNewTaskAddTodo} />
+          <TodoList task={this.state} onDeleteTodo={(index) => this.handleDeleteTodo(index)}/>
+          <CreateTodoListItem onNewTodo={this.handleAddTodo} />
         </div>
 
         <div className="CreateTaskFormSaveOrCancel">
@@ -80,13 +82,16 @@ export class CreateTaskForm extends Component {
     this.props.onNewTaskSave(this.state);
   };
 
-  handleNewTaskAddTodo = (newTodoName) => {
+  handleAddTodo = (newTodoName) => {
     const newTodo = { name: newTodoName, isDone: false };
     const todos = [...this.state.todos, newTodo];
 
     this.setState({ todos });
   };
 
+  handleDeleteTodo = (index) => {
+    const todos = this.state.todos;
+    todos.splice(index, 1);
+    this.setState({ todos })
+  }
 }
-
-
