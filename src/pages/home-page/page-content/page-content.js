@@ -22,18 +22,23 @@ export class PageContent extends Component {
           activeTaskId={this.state.selectedTaskIndex}
           onSelectedTaskClick={(index) => this.handleSelectedTask(index)}
           onCreateTaskFormVisibilityChange={this.handleCreateTaskFormVisibilityChange}
+          onDeleteTask={(index) => this.handleDeleteTask(index)}
         />
 
-        {selectedTaskInfo && (
-          <TaskDetails
-            task={selectedTaskInfo}
-            onNewTodo={this.handleNewTodo}
-            onDeleteTodo={(index) => this.handleXIcon(index)}
-          />
-        )}
+        {
+          selectedTaskInfo && (
+            <TaskDetails
+              task={selectedTaskInfo}
+              onNewTodo={this.handleNewTodo}
+              onDeleteTodo={(index) => this.handleTodoXIcon(index)}
+            />
+          )
+        }
 
         {
-          isCreateTaskFormVisible && <CreateTaskForm />
+          isCreateTaskFormVisible && (
+            <CreateTaskForm onNewTaskSave={this.handleNewTaskSave} onNewTodo={this.handleNewTodo} />
+          )
         }
 
       </div>
@@ -41,15 +46,37 @@ export class PageContent extends Component {
   }
 
   handleCreateTaskFormVisibilityChange = () => {
+    if (!this.state.isCreateTaskFormVisible) {
+      this.setState({
+        selectedTaskIndex: null,
+      });
+    }
     this.setState({
       isCreateTaskFormVisible: !this.state.isCreateTaskFormVisible,
-    })
-  }
+    });
+  };
+
+  handleNewTaskSave = (newTask) => {
+    const taskList = [...this.state.taskList, newTask];
+    this.setState({ taskList });
+    localStorage.setItem('taskList', JSON.stringify((taskList)));
+  };
 
   handleSelectedTask = (index) => {
     this.setState({
       selectedTaskIndex: index,
+      isCreateTaskFormVisible: false,
     });
+  };
+
+  handleTodoXIcon(index) {
+    const taskList = [...this.state.taskList];
+    const selectedTask = taskList[this.state.selectedTaskIndex];
+    selectedTask.todos.splice(index, 1);
+    this.setState({
+      taskList,
+    });
+    localStorage.setItem('taskList', JSON.stringify(taskList));
   };
 
   handleNewTodo = (newTodoName) => {
@@ -64,15 +91,12 @@ export class PageContent extends Component {
     });
   };
 
-  handleXIcon(index) {
+  handleDeleteTask(index) {
     const taskList = [...this.state.taskList];
-    const selectedTask = taskList[this.state.selectedTaskIndex];
-    selectedTask.todos.splice(index, 1);
+    taskList.splice(index, 1);
     this.setState({
       taskList,
     });
     localStorage.setItem('taskList', JSON.stringify(taskList));
   };
-
-
 }

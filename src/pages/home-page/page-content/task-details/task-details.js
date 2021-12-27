@@ -7,8 +7,8 @@ export const TaskDetails = ({ task, onNewTodo, onDeleteTodo }) => {
   return (
     <div className="TaskDetails">
       <TaskInfo task={task} />
-      <TodoList task={task} onDeleteTodo={(index) => onDeleteTodo(index)}/>
-      <CreateTodoListItem onNewTodo={onNewTodo}/>
+      <TodoList task={task} onDeleteTodo={(index) => onDeleteTodo(index)} />
+      <CreateTodoListItem onNewTodo={onNewTodo} />
     </div>
   );
 };

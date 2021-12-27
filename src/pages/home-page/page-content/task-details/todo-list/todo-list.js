@@ -8,8 +8,8 @@ export const TodoList = ({ task, onNewTodo, onDeleteTodo }) => {
         task.todos.map((todo, index) => (
           <TodoListItem
             key={index}
-            name={todo.name}
-            isDone={todo.isDone}
+            name={todo?.name}
+            isDone={todo?.isDone}
             onNewTodo={onNewTodo}
             onDeleteTodo={() => onDeleteTodo(index)}
           />

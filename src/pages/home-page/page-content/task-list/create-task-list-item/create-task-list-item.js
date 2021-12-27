@@ -7,7 +7,7 @@ export const CreateTaskListItem = ({ onCreateTaskFormVisibilityChange }) => {
     <div className="CreateTaskListItem" onClick={onCreateTaskFormVisibilityChange}>
       <span className="CreateTaskListItemAvatar"><FontAwesomeIcon icon={faPlus} /></span>
       <div className="AddInfoDiv">
-        <p className="CreateTaskListItemTitle">Add todo</p>
+        <p className="CreateTaskListItemTitle">Add a task</p>
       </div>
     </div>
   );
