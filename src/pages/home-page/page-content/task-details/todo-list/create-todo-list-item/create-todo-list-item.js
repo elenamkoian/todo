@@ -1,70 +1,55 @@
 import './create-todo-list-item.scss';
-import { Component } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-export class CreateTodoListItem extends Component {
-  state = {
-    isEditMode: false,
+export const CreateTodoListItem = ({ onNewTodo }) => {
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const toggle = () => setIsEditMode(!isEditMode);
+
+  const save = (value) => {
+    onNewTodo(value);
+    toggle();
   };
 
-  render() {
-    const isEditMode = this.state.isEditMode;
+  const cancel = () => toggle();
 
-    return (
-      <div>
-        {
-          !isEditMode ? (
-            <label className="CreateTodoListItem" onClick={this.handleEditModeChange}>
-              <div className="AddIcon">
-                <FontAwesomeIcon icon={faPlus} />
-              </div>
-              <span>add Todo</span>
-            </label>
-          ) : (
-            <input
-              type="text"
-              className="AddTodoInput"
-              onBlur={this.handleBlur}
-              onKeyDown={this.handleKeyDown}
-              autoFocus
-            />
-          )
-        }
-      </div>
-    );
-  }
+  const handleEditModeChange = () => toggle();
 
-  toggle = () => {
-    this.setState({
-      isEditMode: !this.state.isEditMode,
-    });
+  const handleBlur = (ev) => {
+    ev.target.value ? save(ev.target.value) : cancel();
   };
 
-  save = (value) => {
-    this.props.onNewTodo(value);
-    this.toggle();
-  };
-
-  cancel = () => {
-    this.toggle();
-  }
-
-  handleEditModeChange = () => {
-    this.toggle();
-  };
-
-  handleBlur = (ev) => {
-    ev.target.value ? this.save(ev.target.value) : this.cancel();
-  };
-
-  handleKeyDown = (ev) => {
+  const handleKeyDown = (ev) => {
     if (ev.code === 'Enter') {
-      this.handleBlur(ev);
+      handleBlur(ev);
     }
-    if (ev.code === 'Escape' ) {
-      this.cancel();
+    if (ev.code === 'Escape') {
+      cancel();
     }
   };
 
-}
+  return (
+    <div>
+      {
+        !isEditMode ? (
+          <label className="CreateTodoListItem" onClick={handleEditModeChange}>
+            <div className="AddIcon">
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+            <span>add Todo</span>
+          </label>
+        ) : (
+          <input
+            type="text"
+            className="AddTodoInput"
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            autoFocus
+          />
+        )
+      }
+    </div>
+  );
+};

@@ -1,19 +1,41 @@
 import { Button } from '@mui/material';
 import './create-task-form.scss';
-import { Component } from 'react';
 import { Divider } from '../../../../components/divider/divider';
 import { CreateTodoListItem } from '../task-details/todo-list/create-todo-list-item/create-todo-list-item';
 import { TodoList } from '../task-details/todo-list/todo-list';
+import { useState } from 'react';
 
-export class CreateTaskForm extends Component {
-  state = {
-    title: '',
-    description: '',
-    avatar: '',
-    todos: [],
+const DRAFT_TASK_VALUE = {
+  title: '',
+  description: '',
+  avatar: '',
+  todos: [],
+};
+
+export const CreateTaskForm = ({ onSaveNewTask, onCancelNewTask }) => {
+  const [draftTask, setDraftTask] = useState(DRAFT_TASK_VALUE);
+
+  const handleInputChange = (ev) => {
+    const { name, value } = ev.target;
+
+    setDraftTask({ ...draftTask, [name]: value });
   };
 
-  render() {
+  const handleSaveNewTask = () => onSaveNewTask(draftTask);
+
+  const handleAddTodo = (newTodoName) => {
+    const newTodo = { name: newTodoName, isDone: false };
+    const newTodos = [...draftTask.todos, newTodo];
+
+    setDraftTask({ ...draftTask, todos: newTodos });
+  };
+
+  const handleDeleteTodo = (index) => {
+    const todos = draftTask.todos;
+    todos.splice(index, 1);
+    setDraftTask({ ...draftTask, todos });
+  }
+
     return (
       <div className="CreateTaskForm">
         <div className="AvatarWithInfo">
@@ -29,14 +51,14 @@ export class CreateTaskForm extends Component {
               name="title"
               placeholder="give a name to your doit"
               maxLength={25}
-              onChange={this.handleInputChange}
+              onChange={handleInputChange}
             />
             <input
               className="CreateTaskFormDescription"
               name="description"
               placeholder="tell a bit about your doit"
               autoComplete="off"
-              onChange={this.handleInputChange}
+              onChange={handleInputChange}
             />
           </div>
         </div>
@@ -44,8 +66,8 @@ export class CreateTaskForm extends Component {
         <Divider />
 
         <div className="CreateTaskFormAddTodo">
-          <TodoList task={this.state} onDeleteTodo={(index) => this.handleDeleteTodo(index)}/>
-          <CreateTodoListItem onNewTodo={this.handleAddTodo} />
+          <TodoList task={draftTask} onDeleteTodo={(index) => handleDeleteTodo(index)}/>
+          <CreateTodoListItem onNewTodo={handleAddTodo} />
         </div>
 
         <div className="CreateTaskFormSaveOrCancel">
@@ -53,7 +75,7 @@ export class CreateTaskForm extends Component {
             variant="text"
             size="medium"
             color="success"
-            onClick={this.props.onCancelNewTask}
+            onClick={onCancelNewTask}
           >
             CANCEL
           </Button>
@@ -62,36 +84,11 @@ export class CreateTaskForm extends Component {
             variant="outlined"
             size="large"
             color="success"
-            onClick={this.handleNewTaskSave}
+            onClick={handleSaveNewTask}
           >
             Save
           </Button>
         </div>
       </div>
     );
-  }
-
-  handleInputChange = (ev) => {
-    const { name, value } = ev.target;
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  handleNewTaskSave = () => {
-    this.props.onNewTaskSave(this.state);
-  };
-
-  handleAddTodo = (newTodoName) => {
-    const newTodo = { name: newTodoName, isDone: false };
-    const todos = [...this.state.todos, newTodo];
-
-    this.setState({ todos });
-  };
-
-  handleDeleteTodo = (index) => {
-    const todos = this.state.todos;
-    todos.splice(index, 1);
-    this.setState({ todos })
-  }
 }
