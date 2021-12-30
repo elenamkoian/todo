@@ -5,7 +5,7 @@ import { CreateTodoListItem } from '../task-details/todo-list/create-todo-list-i
 import { TodoList } from '../task-details/todo-list/todo-list';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { actions } from '../../../../store';
+import { tasksSlice } from '../../../../store';
 
 const DRAFT_TASK_VALUE = {
   title: '',
@@ -14,7 +14,7 @@ const DRAFT_TASK_VALUE = {
   todos: [],
 };
 
-export const CreateTaskForm = ({ onClose }) => {
+export const  CreateTaskForm = ({ onClose }) => {
   const dispatch = useDispatch();
   const [draftTask, setDraftTask] = useState(DRAFT_TASK_VALUE);
 
@@ -24,7 +24,7 @@ export const CreateTaskForm = ({ onClose }) => {
   };
 
   const handleSaveNewTask = () => {
-    dispatch({ type: actions.createTask, payload: draftTask });
+    dispatch(tasksSlice.actions.createTAsk(draftTask));
     onClose()
   };
 

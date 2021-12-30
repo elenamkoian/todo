@@ -2,14 +2,13 @@ import './task-list.scss';
 import { TaskListItem } from './task-list-item/task-list-item';
 import { CreateTaskListItem } from './create-task-list-item/create-task-list-item';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../../../store';
-import { selectTaskList } from '../../../../store/selectors';
+import { tasksSlice } from '../../../../store';
 
 export const TaskList = ({ onSelectedTaskClick, activeTaskId, onCreateTaskFormVisibilityChange }) => {
-  const taskList = useSelector(selectTaskList)
+  const taskList = useSelector(tasksSlice.selectors.selectAll)
   const dispatch = useDispatch();
   const handleDeleteTask = (index)  => {
-      dispatch({ type: actions.deleteTask, payload: index })
+      dispatch(tasksSlice.actions.deleteTask(index))
   };
 
   return (

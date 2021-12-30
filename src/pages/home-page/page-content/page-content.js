@@ -3,11 +3,11 @@ import { TaskList } from './task-list/task-list';
 import { TaskDetails } from './task-details/task-details';
 import { CreateTaskForm } from './create-task-form/create-task-form';
 import { useState } from 'react';
-import { selectTaskList } from '../../../store/selectors';
 import { useSelector } from 'react-redux';
+import { tasksSlice } from '../../../store';
 
 export const PageContent = () => {
-  const taskList = useSelector(selectTaskList)
+  const taskList = useSelector(tasksSlice.selectors.selectAll)
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
   const [isCreateTaskFormVisible, setIsCreateTaskFormVisible] = useState(false);
 
