@@ -6,19 +6,19 @@ import { tasksSlice } from '../../../../../store';
 import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-export const TaskListItem = ({ task, index }) => {
+export const TaskListItem = ({ task }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleDeleteButtonClick = (ev) => {
     ev.preventDefault();
-    dispatch(tasksSlice.actions.deleteTask(index));
+    dispatch(tasksSlice.actions.deleteTask(task.uid));
     navigate('/');
   };
 
   return (
     <NavLink
-      to={`/${index}`}
+      to={`/${task.uid}`}
       className={({ isActive }) => `TaskListItem ${isActive ? 'Active' : ''}`}
     >
       <TaskInfo task={task} />

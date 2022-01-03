@@ -7,6 +7,10 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { tasksSlice } from '../../../../store';
 import { useNavigate } from 'react-router-dom';
+import genUid from 'light-uid';
+
+const gentlemanAvatar = 'https://s3-alpha-sig.figma.com/img/4a28/0872/9dc399cae1699b498c1bfaf3748d9f5c?Expires=1642377600&Signature=YQVzYTDeQ-P8cJZU2-VISVEeclddw1U9CjeGOiSEYfwaZGZTW-EFmso2V5WAFyYWkYdwl194Ig1tPQTkWeZbSmDv1tkuvNJwbZFN-8Qu2hRWklrudqDk1HfaHQRxZL71QzA1bJPVuCtmVKJLGzRFa15ETKdJhRWNEH9VYkjgR0rlPEalLXDuyiiQEewCSEn49x1LJ9o9HM8sMnsKJDDEZJBAOhqghHvKgWijUxecqfT~8TzVCI4ZBzPc4SyvO1tiV3cI96hBNFjpZJKT5UwvL~7c72W~5nUwuykHNtQ6e9Tu8r5ULgr0StBubu6nF7t4Vvzinb48iGvSuqRTFQLeTw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA';
+const ladyAvatar = 'https://s3-alpha-sig.figma.com/img/a8c0/5215/4653505e54bbb7287054963506684370?Expires=1642377600&Signature=GxcTT0B6B4llOgKIiKX2K3kkDrVebCe6aQds3q17nlp1QXjVVAP~qXBIy1Lhp-6JNAWx0TJqAdcSqH4DJmiWL-uYoJ-AQVXUulGOBNFEISqYC7F9q7B-B7P1NYAkiRKuok7snG3RnhBxTi56LP26Qi-tUy9yHAHb1RjxJFLO4~NXBLrGI5Jxi-HijtfANLIwX1tLHjjIqwiZ~NyX3U50cltYgm8sOqQrGKH37mSiJS1TDBFO7psV~xlCoq7OEpeyvLilcj3~1X~Un0m~bKSspcKjFwrvUxbXOKFfmr5kUhucZXkAinDqhMLIodU~o~D0fus6H7kwU171FfVWdjepPQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA';
 
 const DRAFT_TASK_VALUE = {
   title: '',
@@ -18,7 +22,10 @@ const DRAFT_TASK_VALUE = {
 export const CreateTaskForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [draftTask, setDraftTask] = useState(DRAFT_TASK_VALUE);
+  const [draftTask, setDraftTask] = useState({
+    ...DRAFT_TASK_VALUE,
+    avatar: Math.random() > 0.5 ? gentlemanAvatar : ladyAvatar,
+  });
 
   const handleInputChange = (ev) => {
     const { name, value } = ev.target;
@@ -35,15 +42,14 @@ export const CreateTaskForm = () => {
   };
 
   const handleAddTodo = (newTodoName) => {
-    const newTodo = { name: newTodoName, isDone: false };
+    const newTodo = { uid: genUid(), name: newTodoName, isDone: false };
     const newTodos = [...draftTask.todos, newTodo];
 
     setDraftTask({ ...draftTask, todos: newTodos });
   };
 
-  const handleDeleteTodo = (index) => {
-    const todos = draftTask.todos;
-    todos.splice(index, 1);
+  const handleDeleteTodo = (todoUid) => {
+    const todos = draftTask.todos.filter((todo) => todo.uid !== todoUid);
     setDraftTask({ ...draftTask, todos });
   };
 
@@ -54,7 +60,7 @@ export const CreateTaskForm = () => {
           className="CreateTaskFormAvatar"
           alt="avatar"
           name="avatar"
-          src="https://s3-alpha-sig.figma.com/img/4a28/0872/9dc399cae1699b498c1bfaf3748d9f5c?Expires=1641168000&Signature=Rrzywy1DEucxrF9KXmrgRCRc3w77BDRy8PsM3UjtNlfbj8C18ZM2um~v8DLONluiboCETamN3jn1Yka0RqoIMftMFBfCQTXDeCE6RDzxxGOAXzcUkO20qX99y98aqRWK8h6Bt5Nv-oeaZgznfIxl~Tigex5uWV93l3uulMNzB7GLUepTY91hsEHlYt7VZZqM6JNwTBMyHGo18UoYlfdj-RIxuZLf0amzzsAdT44olXald7NSX1flkBk3GvRFg2~f6IxTwl45k8hwPR15fcBrqOuTjTv42Sr1AEYF1zfs0dAs4H95OFCVmSC0lAI-D7WKXrH0QO8gL68aokhCp8HmFw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+          src={draftTask.avatar}
         />
         <div className="CreateTaskFormInfo">
           <input
@@ -77,7 +83,7 @@ export const CreateTaskForm = () => {
       <Divider />
 
       <div className="CreateTaskFormAddTodo">
-        <TodoList task={draftTask} onDeleteTodo={(index) => handleDeleteTodo(index)} />
+        <TodoList task={draftTask} onDeleteTodo={handleDeleteTodo} />
         <CreateTodoListItem onNewTodo={handleAddTodo} />
       </div>
 

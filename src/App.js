@@ -12,7 +12,7 @@ function App() {
       <PageContent>
         <Routes>
           <Route path="/create" element={<CreateTaskForm />} />
-          <Route path="/:taskIndex" element={<TaskDetails />} />
+          <Route path="/:taskUid" element={<TaskDetails />} />
         </Routes>
       </PageContent>
     </div>

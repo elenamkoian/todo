@@ -5,12 +5,12 @@ export const TodoList = ({ task, onDeleteTodo }) => {
   return (
     <div className="TodoList">
       {
-        task.todos.map((todo, index) => (
+        task.todos.map((todo) => (
           <TodoListItem
-            key={index}
-            name={todo?.name}
-            isDone={todo?.isDone}
-            onDeleteTodo={() => onDeleteTodo(index)}
+            key={todo.uid}
+            name={todo.name}
+            isDone={todo.isDone}
+            onDeleteTodo={() => onDeleteTodo(todo.uid)}
           />
         ))
       }

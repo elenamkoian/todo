@@ -8,20 +8,20 @@ import { useParams } from 'react-router-dom';
 
 export const TaskDetails = () => {
   const dispatch = useDispatch();
-  const { taskIndex } = useParams();
-  const task = useSelector((state) => tasksSlice.selectors.selectByIndex(state, taskIndex));
+  const { taskUid } = useParams();
+  const task = useSelector((state) => tasksSlice.selectors.selectById(state, taskUid));
 
-  const handleDeleteTodo = (todoIndex) => {
+  const handleDeleteTodo = (todoUid) => {
     dispatch(tasksSlice.actions.deleteTodo({
-        taskIndex,
-        todoIndex,
+      taskUid,
+      todoUid,
     }));
   };
 
   const handleNewTodo = (newTodoName) => {
     dispatch(tasksSlice.actions.createTodo({
-        taskIndex,
-        newTodoName,
+      taskUid,
+      newTodoName,
     }));
   };
 
@@ -32,7 +32,7 @@ export const TaskDetails = () => {
   return (
     <div className="TaskDetails">
       <TaskInfo task={task} />
-      <TodoList task={task} onDeleteTodo={(index) => handleDeleteTodo(index)} />
+      <TodoList task={task} onDeleteTodo={handleDeleteTodo} />
       <CreateTodoListItem onNewTodo={handleNewTodo} />
     </div>
   );
