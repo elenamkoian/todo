@@ -6,6 +6,7 @@ import { TodoList } from '../task-details/todo-list/todo-list';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { tasksSlice } from '../../../../store';
+import { useNavigate } from 'react-router-dom';
 
 const DRAFT_TASK_VALUE = {
   title: '',
@@ -14,7 +15,8 @@ const DRAFT_TASK_VALUE = {
   todos: [],
 };
 
-export const  CreateTaskForm = ({ onClose }) => {
+export const CreateTaskForm = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [draftTask, setDraftTask] = useState(DRAFT_TASK_VALUE);
 
@@ -23,9 +25,13 @@ export const  CreateTaskForm = ({ onClose }) => {
     setDraftTask({ ...draftTask, [name]: value });
   };
 
+  const handleClose = () => {
+    navigate('/');
+  };
+
   const handleSaveNewTask = () => {
     dispatch(tasksSlice.actions.createTAsk(draftTask));
-    onClose()
+    handleClose();
   };
 
   const handleAddTodo = (newTodoName) => {
@@ -80,7 +86,7 @@ export const  CreateTaskForm = ({ onClose }) => {
           variant="text"
           size="medium"
           color="success"
-          onClick={onClose}
+          onClick={handleClose}
         >
           CANCEL
         </Button>
