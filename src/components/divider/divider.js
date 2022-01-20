@@ -1,8 +1,11 @@
-import './divider.scss';
+import * as classes from './divider.module.scss';
+import PatchStyles from 'patch-styles';
 
 export const Divider = () => {
   return (
-    <div className="Divider">
-    </div>
+    <PatchStyles classNames={classes}>
+      <div className="Divider">
+      </div>
+    </PatchStyles>
   );
 };

@@ -1,9 +1,9 @@
 import './App.css';
 import { Header } from './components/header/header';
-import { PageContent } from './pages/home-page/page-content/page-content';
+import { PageContent } from './pages/_page-shell/page-content';
 import { Route, Routes } from 'react-router-dom';
-import { CreateTaskForm } from './pages/home-page/page-content/create-task-form/create-task-form';
-import { TaskDetails } from './pages/home-page/page-content/task-details/task-details';
+import { CreateTaskForm } from './pages/create-task/create-task-form';
+import { TaskDetails } from './pages/task-details/task-details';
 
 function App() {
   return (

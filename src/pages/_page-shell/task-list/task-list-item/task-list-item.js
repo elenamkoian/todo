@@ -1,10 +1,12 @@
-import './tasl-list-item.scss';
-import { TaskInfo } from '../../../../../components/task-info/task-info';
+import * as classes from './tasl-list-item.module.scss';
+import { TaskInfo } from '../../../../components/task-info/task-info';
 import { Close } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { tasksSlice } from '../../../../../store';
+import { tasksSlice } from '../../../../store';
 import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+import PatchStyles from 'patch-styles';
 
 export const TaskListItem = ({ task }) => {
   const dispatch = useDispatch();
@@ -19,12 +21,12 @@ export const TaskListItem = ({ task }) => {
   return (
     <NavLink
       to={`/${task.uid}`}
-      className={({ isActive }) => `TaskListItem ${isActive ? 'Active' : ''}`}
+      className={({ isActive }) => clsx(classes.TaskListItem, { [classes.Active]: isActive })}
     >
       <TaskInfo task={task} />
 
       <IconButton
-        className="TaskListItemRemove"
+        className={classes.TaskListItemRemove}
         size="small"
         onClick={handleDeleteButtonClick}
       >

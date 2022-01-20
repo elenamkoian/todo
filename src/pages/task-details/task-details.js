@@ -1,10 +1,11 @@
-import { TaskInfo } from '../../../../components/task-info/task-info';
-import './task-details.scss';
+import { TaskInfo } from '../../components/task-info/task-info';
+import * as classes from './task-details.module.scss';
 import { TodoList } from './todo-list/todo-list';
 import { CreateTodoListItem } from './todo-list/create-todo-list-item/create-todo-list-item';
 import { useDispatch, useSelector } from 'react-redux';
-import { tasksSlice } from '../../../../store';
+import { tasksSlice } from '../../store';
 import { useParams } from 'react-router-dom';
+import PatchStyles from 'patch-styles';
 
 export const TaskDetails = () => {
   const dispatch = useDispatch();
@@ -30,10 +31,12 @@ export const TaskDetails = () => {
   }
 
   return (
-    <div className="TaskDetails">
-      <TaskInfo task={task} />
-      <TodoList task={task} onDeleteTodo={handleDeleteTodo} />
-      <CreateTodoListItem onNewTodo={handleNewTodo} />
-    </div>
+    <PatchStyles classNames={classes}>
+      <div className="TaskDetails">
+        <TaskInfo task={task} />
+        <TodoList task={task} onDeleteTodo={handleDeleteTodo} />
+        <CreateTodoListItem onNewTodo={handleNewTodo} />
+      </div>
+    </PatchStyles>
   );
 };

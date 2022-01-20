@@ -1,7 +1,8 @@
-import './create-todo-list-item.scss';
+import * as classes from './create-todo-list-item.module.scss';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import PatchStyles from 'patch-styles';
 
 export const CreateTodoListItem = ({ onNewTodo }) => {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -31,25 +32,27 @@ export const CreateTodoListItem = ({ onNewTodo }) => {
   };
 
   return (
-    <div>
-      {
-        !isEditMode ? (
-          <label className="CreateTodoListItem" onClick={handleEditModeChange}>
-            <div className="AddIcon">
-              <FontAwesomeIcon icon={faPlus} />
-            </div>
-            <span>add Todo</span>
-          </label>
-        ) : (
-          <input
-            type="text"
-            className="AddTodoInput"
-            onBlur={handleBlur}
-            onKeyDown={handleKeyDown}
-            autoFocus
-          />
-        )
-      }
-    </div>
+    <PatchStyles classNames={classes}>
+      <div>
+        {
+          !isEditMode ? (
+            <label className="CreateTodoListItem" onClick={handleEditModeChange}>
+              <div className="AddIcon">
+                <FontAwesomeIcon icon={faPlus} />
+              </div>
+              <span>add Todo</span>
+            </label>
+          ) : (
+            <input
+              type="text"
+              className="AddTodoInput"
+              onBlur={handleBlur}
+              onKeyDown={handleKeyDown}
+              autoFocus
+            />
+          )
+        }
+      </div>
+    </PatchStyles>
   );
 };

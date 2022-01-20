@@ -1,11 +1,15 @@
-import './checkbox.scss';
+import * as classes from './checkbox.module.scss';
+import PatchStyles from 'patch-styles';
 
 export const Checkbox = ({ checked, label }) => {
   return (
-    <label className="CheckboxContainer">
-      <input type="checkbox" hidden />
-      <div className="CheckBox" />
-      <span className="Label">{label}</span>
-    </label>
+    <PatchStyles classNames={classes}>
+      <label className="CheckboxContainer">
+        <input type="checkbox" hidden />
+        <div className="CheckBox" />
+        <span className="Label">{label}</span>
+      </label>
+    </PatchStyles>
   );
 };
+
