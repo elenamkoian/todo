@@ -1,4 +1,3 @@
-import * as classes from './tasl-list-item.module.scss';
 import { TaskInfo } from '../../../../components/task-info/task-info';
 import { Close } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
@@ -6,9 +5,33 @@ import { tasksSlice } from '../../../../store';
 import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
-import PatchStyles from 'patch-styles';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme) => ({
+    TaskListItem: {
+      backgroundColor: theme.palette.background.paper,
+      borderRadius: theme.spacing(2),
+      minWidth: theme.spacing(52),
+      cursor: 'pointer',
+      position: 'relative',
+      textDecoration: 'none',
+      height: 'auto',
+    },
+    TaskListItemRemove: {
+      cursor: 'pointer',
+      color: theme.palette.text.primary,
+      position: 'absolute',
+      top: 0,
+      right: 0,
+    },
+    Active: {
+      border: '1px solid #383B41',
+    },
+  }
+));
 
 export const TaskListItem = ({ task }) => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

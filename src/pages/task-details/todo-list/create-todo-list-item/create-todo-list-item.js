@@ -1,10 +1,47 @@
-import * as classes from './create-todo-list-item.module.scss';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import PatchStyles from 'patch-styles';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme) => ({
+    CreateTodoListItem: {
+      display: 'flex',
+      gap: theme.spacing(1),
+      color: theme.palette.text.primary,
+      cursor: 'pointer',
+
+      '& > span': {
+        height: theme.spacing(2.5),
+        fontSize: theme.spacing(2),
+        color: theme.palette.text.primary,
+        backgroundColor: 'transparent',
+        border: theme.palette.text.primary,
+        outline: 'none',
+      },
+    },
+    AddIcon: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+    },
+    AddTodoInput: {
+      color: theme.palette.text.primary,
+      height: theme.spacing(3),
+      outline: 'none',
+      paddingLeft: theme.spacing(1),
+      fontSize: theme.spacing(2),
+      border: '1px solid grey',
+      borderRadius: theme.spacing(1.25),
+      backgroundColor: 'transparent',
+    },
+  }
+));
 
 export const CreateTodoListItem = ({ onNewTodo }) => {
+  const classes = useStyles();
   const [isEditMode, setIsEditMode] = useState(false);
 
   const toggle = () => setIsEditMode(!isEditMode);
