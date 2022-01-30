@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
@@ -11,7 +10,7 @@ import { GeneralMuiConfig } from './main-providers/general-mui-config';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter basename="todo">
+      <BrowserRouter>
         <GeneralMuiConfig>
           <App />
         </GeneralMuiConfig>
