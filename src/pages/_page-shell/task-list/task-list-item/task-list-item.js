@@ -1,11 +1,11 @@
 import { TaskInfo } from '../../../../components/task-info/task-info';
 import { Close } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { tasksSlice } from '../../../../store';
-import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@mui/styles';
+import { useDeleteTaskMutation } from '../../../../store/services/tasks.service';
+import { WithLoader } from '../../../../components/with-loader';
 
 const useStyles = makeStyles((theme) => ({
     TaskListItem: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: 'none',
       height: 'auto',
     },
-    TaskListItemRemove: {
+    DeleteTaskListItem: {
       cursor: 'pointer',
       color: theme.palette.text.primary,
       position: 'absolute',
@@ -31,13 +31,13 @@ const useStyles = makeStyles((theme) => ({
 ));
 
 export const TaskListItem = ({ task }) => {
+  const [deleteTask, { isLoading }] = useDeleteTaskMutation();
   const classes = useStyles();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleDeleteButtonClick = (ev) => {
+  const handleDeleteTask = (ev) => {
     ev.preventDefault();
-    dispatch(tasksSlice.actions.deleteTask(task.uid));
+    deleteTask(task.uid);
     navigate('/');
   };
 
@@ -48,13 +48,15 @@ export const TaskListItem = ({ task }) => {
     >
       <TaskInfo task={task} />
 
-      <IconButton
-        className={classes.TaskListItemRemove}
-        size="small"
-        onClick={handleDeleteButtonClick}
-      >
-        <Close />
-      </IconButton>
+      <WithLoader isLoading={isLoading} className={classes.DeleteTaskListItem}>
+        <IconButton
+          className={classes.DeleteTaskListItem}
+          size="small"
+          onClick={handleDeleteTask}
+        >
+          <Close />
+        </IconButton>
+      </WithLoader>
     </NavLink>
   );
 };

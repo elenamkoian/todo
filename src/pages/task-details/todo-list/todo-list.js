@@ -20,8 +20,7 @@ export const TodoList = ({ task, onDeleteTodo }) => {
           task.todos.map((todo) => (
             <TodoListItem
               key={todo.uid}
-              name={todo.name}
-              isDone={todo.isDone}
+              todo={todo}
               onDeleteTodo={() => onDeleteTodo(todo.uid)}
             />
           ))

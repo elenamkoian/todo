@@ -29,12 +29,11 @@ const useStyles = makeStyles((theme) => ({
     },
     AddTodoInput: {
       color: theme.palette.text.primary,
-      height: theme.spacing(3),
       outline: 'none',
-      paddingLeft: theme.spacing(1),
+      padding: theme.spacing(0.7),
       fontSize: theme.spacing(2),
       border: '1px solid grey',
-      borderRadius: theme.spacing(1.25),
+      borderRadius: theme.spacing(2),
       backgroundColor: 'transparent',
     },
   }

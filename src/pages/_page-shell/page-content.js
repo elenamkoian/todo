@@ -16,7 +16,7 @@ export const PageContent = ({ children }) => {
   const classes = useStyles();
   return (
     <PatchStyles classNames={classes}>
-      <div className="PageContent">
+      <div className={'PageContent'}>
         <TaskList />
 
         {children}

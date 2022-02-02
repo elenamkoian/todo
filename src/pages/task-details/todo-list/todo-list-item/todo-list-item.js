@@ -1,6 +1,5 @@
-import { Checkbox } from '../../../../components/checkbox';
 import { Close } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { FormControlLabel, IconButton, Checkbox } from '@mui/material';
 import PatchStyles from 'patch-styles';
 import { makeStyles } from '@mui/styles';
 
@@ -11,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
       alignItems: 'center',
       gap: theme.spacing(1),
     },
-    RemoveIcon: {
+    DeleteTodoListItem: {
       color: theme.palette.text.primary,
       fontSize: theme.spacing(1.25),
       cursor: 'pointer',
@@ -19,16 +18,23 @@ const useStyles = makeStyles((theme) => ({
   }
 ));
 
-export const TodoListItem = ({ name, onDeleteTodo }) => {
+export const TodoListItem = ({ todo, onDeleteTodo }) => {
   const classes = useStyles();
   return (
     <PatchStyles classNames={classes}>
       <div className="TodoListItem">
-        <Checkbox label={name} />
 
-        <IconButton className="RemoveIcon" size="small" onClick={() => onDeleteTodo()}>
+        <FormControlLabel
+          control={(
+            <Checkbox/>
+          )}
+          label={todo.name}
+        />
+
+        <IconButton className="DeleteTodoListItem" size="small" onClick={() => onDeleteTodo()}>
           <Close />
         </IconButton>
+
       </div>
     </PatchStyles>
   );

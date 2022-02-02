@@ -3,12 +3,11 @@ import { Divider } from '../../components/divider/divider';
 import { CreateTodoListItem } from '../task-details/todo-list/create-todo-list-item/create-todo-list-item';
 import { TodoList } from '../task-details/todo-list/todo-list';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { tasksSlice } from '../../store';
 import { useNavigate } from 'react-router-dom';
 import genUid from 'light-uid';
 import PatchStyles from 'patch-styles';
 import { makeStyles } from '@mui/styles';
+import { useCreateTaskMutation } from '../../store/services/tasks.service';
 
 const useStyles = makeStyles((theme) => ({
     CreateTaskForm: {
@@ -77,9 +76,9 @@ const DRAFT_TASK_VALUE = {
 };
 
 export const CreateTaskForm = () => {
+  const [createTask, { isLoading, data }] = useCreateTaskMutation();
   const classes = useStyles();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [draftTask, setDraftTask] = useState({
     ...DRAFT_TASK_VALUE,
     avatar: Math.random() > 0.5 ? gentlemanAvatar : ladyAvatar,
@@ -95,7 +94,7 @@ export const CreateTaskForm = () => {
   };
 
   const handleSaveNewTask = () => {
-    dispatch(tasksSlice.actions.createTAsk(draftTask));
+    createTask({ ...draftTask, uid: genUid() });
     handleClose();
   };
 
